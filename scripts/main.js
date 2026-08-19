@@ -22,17 +22,49 @@ if(downloadBtn){
   });
 }
 
-// Zoom controls (simple): change iframe scale using CSS transform
+const PDF_URL = 'Adad%20Al%20Shabab%E2%80%99s%20Resume.pdf';
+const pdfViewer = document.getElementById('pdfViewer');
+const status = document.getElementById('status');
 let zoom = 1;
 const zoomLabel = document.getElementById('zoomLabel');
-const pdfFrame = document.getElementById('pdfFrame');
+let pdfDocument;
+
+async function renderDocument(){
+  if(!pdfDocument) return;
+  pdfViewer.textContent = '';
+  const availableWidth = Math.max(280, pdfViewer.clientWidth);
+  for(let pageNumber = 1; pageNumber <= pdfDocument.numPages; pageNumber++){
+    const page = await pdfDocument.getPage(pageNumber);
+    const baseViewport = page.getViewport({scale:1});
+    const scale = (availableWidth / baseViewport.width) * zoom;
+    const viewport = page.getViewport({scale});
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pdf-page';
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+    canvas.setAttribute('aria-label', `Resume page ${pageNumber}`);
+    pdfViewer.appendChild(canvas);
+    await page.render({canvasContext:canvas.getContext('2d'), viewport}).promise;
+  }
+  status.hidden = true;
+}
+
+async function loadDocument(){
+  try{
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    pdfDocument = await pdfjsLib.getDocument(PDF_URL).promise;
+    await renderDocument();
+  }catch(error){
+    status.textContent = 'Unable to display the resume. Use Download PDF instead.';
+    console.error(error);
+  }
+}
+
 function updateZoom(){
   zoomLabel.textContent = Math.round(zoom*100) + '%';
-  pdfFrame.style.transform = `scale(${zoom})`;
-  pdfFrame.style.transformOrigin = 'top left';
-  // adjust height so scaled content fits
-  pdfFrame.style.height = (1100 / zoom) + 'px';
+  renderDocument();
 }
 document.getElementById('zoomIn').addEventListener('click', ()=>{ zoom = Math.min(2, zoom + 0.1); updateZoom(); });
 document.getElementById('zoomOut').addEventListener('click', ()=>{ zoom = Math.max(0.5, zoom - 0.1); updateZoom(); });
-updateZoom();
+window.addEventListener('resize', ()=>{ if(pdfDocument) renderDocument(); });
+loadDocument();
