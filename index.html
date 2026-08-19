@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Resume Viewer</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;background:#f6f7fb;margin:0;padding:16px}
+    .viewer{max-width:900px;margin:0 auto;background:white;border-radius:8px;padding:12px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+    .controls{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+    button{padding:8px 10px;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer}
+    #pdfFrame{width:100%;height:80vh;border:1px solid #eee}
+  </style>
+</head>
+<body>
+  <div class="viewer">
+    <div class="controls">
+      <button id="zoomOut">-</button>
+      <div id="zoomLabel">100%</div>
+      <button id="zoomIn">+</button>
+      <a id="downloadBtn" href="Adad%20Al%20Shabab%E2%80%99s%20Resume.pdf" download style="margin-left:12px">Download PDF</a>
+    </div>
+    <object id="pdfFrame" data="Adad%20Al%20Shabab%E2%80%99s%20Resume.pdf" type="application/pdf">
+      <p>Your browser cannot display the PDF here. <a href="Adad%20Al%20Shabab%E2%80%99s%20Resume.pdf">Open the resume</a>.</p>
+    </object>
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>

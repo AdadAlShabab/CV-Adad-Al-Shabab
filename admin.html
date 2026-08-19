@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Analytics (Admin)</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;background:#f6f7fb;margin:0;padding:16px}
+    .card{max-width:600px;margin:40px auto;background:white;border-radius:8px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+    .stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0}
+    #chart{display:flex;align-items:flex-end;gap:8px;height:180px;margin-top:20px;border-bottom:1px solid #ddd;padding:0 8px}
+    .bar-wrap{height:100%;display:flex;flex:1;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;font-size:11px;color:#666}
+    .bar{width:100%;max-width:34px;background:#2d6cdf;border-radius:4px 4px 0 0;min-height:2px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>Analytics</h3>
+    <p style="color:#666">Private dashboard. Your token is requested locally and is not stored in this site.</p>
+    <form id="authForm">
+      <label for="tokenInput">Admin token</label>
+      <input id="tokenInput" type="password" autocomplete="current-password" required />
+      <button type="submit">Unlock</button>
+    </form>
+    <div id="loading">Loading…</div>
+    <div id="stats" style="display:none">
+      <div class="stat"><strong>Total views</strong><span id="views">0</span></div>
+      <div class="stat"><strong>Total downloads</strong><span id="downloads">0</span></div>
+      <div class="stat"><strong>Unique agents (UA)</strong><span id="agents">0</span></div>
+      <h4>Views by day</h4>
+      <div id="chart" aria-label="Views by day"></div>
+      <div style="margin-top:12px"><button id="refresh">Refresh</button></div>
+    </div>
+  </div>
+  <script src="scripts/admin.js"></script>
+</body>
+</html>
