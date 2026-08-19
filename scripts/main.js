@@ -1,6 +1,5 @@
 // Configuration: set your deployed Apps Script endpoint here (do not include token in public repo)
-const ANALYTICS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw2cK9a2hWdzKVU1zuLWCZU9jFeegG5NCFXyUQRTLPONtpQ0vqaPzJxnI9hfhsicD18/exec';
-
+const ANALYTICS_ENDPOINT = process.env.ANALYTICS_ENDPOINT;
 function sendEvent(type, extra={}){
   if(!ANALYTICS_ENDPOINT || ANALYTICS_ENDPOINT.startsWith('REPLACE')) return;
   try{
