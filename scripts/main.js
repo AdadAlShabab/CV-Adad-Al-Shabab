@@ -38,13 +38,20 @@ async function renderDocument(){
     const baseViewport = page.getViewport({scale:1});
     const scale = (availableWidth / baseViewport.width) * zoom;
     const viewport = page.getViewport({scale});
+    const outputScale = window.devicePixelRatio || 1;
     const canvas = document.createElement('canvas');
     canvas.className = 'pdf-page';
-    canvas.width = Math.floor(viewport.width);
-    canvas.height = Math.floor(viewport.height);
+    canvas.width = Math.floor(viewport.width * outputScale);
+    canvas.height = Math.floor(viewport.height * outputScale);
+    canvas.style.width = `${Math.floor(viewport.width)}px`;
+    canvas.style.height = `${Math.floor(viewport.height)}px`;
     canvas.setAttribute('aria-label', `Resume page ${pageNumber}`);
     pdfViewer.appendChild(canvas);
-    await page.render({canvasContext:canvas.getContext('2d'), viewport}).promise;
+    await page.render({
+      canvasContext:canvas.getContext('2d'),
+      viewport,
+      transform: outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null
+    }).promise;
   }
   status.hidden = true;
 }
