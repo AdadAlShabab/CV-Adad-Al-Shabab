@@ -1,5 +1,5 @@
 // Admin page fetches aggregated data from the Apps Script endpoint.
-const ANALYTICS_ENDPOINT = process.env.ANALYTICS_ENDPOINT;
+const ANALYTICS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw2cK9a2hWdzKVU1zuLWCZU9jFeegG5NCFXyUQRTLPONtpQ0vqaPzJxnI9hfhsicD18/exec';
 
 function qs(name){
   const params = new URLSearchParams(location.search);
