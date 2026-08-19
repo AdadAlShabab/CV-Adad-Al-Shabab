@@ -1,5 +1,5 @@
 // Configuration: set your deployed Apps Script endpoint here (do not include token in public repo)
-const ANALYTICS_ENDPOINT = process.env.ANALYTICS_ENDPOINT;
+const ANALYTICS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw2cK9a2hWdzKVU1zuLWCZU9jFeegG5NCFXyUQRTLPONtpQ0vqaPzJxnI9hfhsicD18/exec';
 function sendEvent(type, extra={}){
   if(!ANALYTICS_ENDPOINT || ANALYTICS_ENDPOINT.startsWith('REPLACE')) return;
   try{
@@ -31,7 +31,7 @@ function updateZoom(){
   pdfFrame.style.transform = `scale(${zoom})`;
   pdfFrame.style.transformOrigin = 'top left';
   // adjust height so scaled content fits
-  pdfFrame.style.height = (80 / zoom) + 'vh';
+  pdfFrame.style.height = (1100 / zoom) + 'px';
 }
 document.getElementById('zoomIn').addEventListener('click', ()=>{ zoom = Math.min(2, zoom + 0.1); updateZoom(); });
 document.getElementById('zoomOut').addEventListener('click', ()=>{ zoom = Math.max(0.5, zoom - 0.1); updateZoom(); });
