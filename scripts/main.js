@@ -25,7 +25,7 @@ if(downloadBtn){
 const PDF_URL = 'Adad%20Al%20Shabab%E2%80%99s%20Resume.pdf';
 const pdfViewer = document.getElementById('pdfViewer');
 const status = document.getElementById('status');
-let zoom = 1;
+let zoom = 0.7;
 const zoomLabel = document.getElementById('zoomLabel');
 let pdfDocument;
 
