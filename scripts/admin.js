@@ -30,9 +30,14 @@ async function loadStats(){
   if(!ANALYTICS_ENDPOINT || ANALYTICS_ENDPOINT.startsWith('REPLACE')){ document.getElementById('loading').textContent = 'Set ANALYTICS_ENDPOINT in scripts/admin.js'; return; }
   document.getElementById('loading').textContent = 'Loading…';
   try{
-    const res = await fetch(ANALYTICS_ENDPOINT + '?action=summary&token=' + encodeURIComponent(token));
+    const res = await fetch(ANALYTICS_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=UTF-8'},
+      body:JSON.stringify({action:'summary', token})
+    });
     if(!res.ok) throw new Error(await res.text());
     const data = await res.json();
+    if(data.error) throw new Error(data.error);
     document.getElementById('views').textContent = data.views || 0;
     document.getElementById('downloads').textContent = data.downloads || 0;
     document.getElementById('agents').textContent = data.unique_agents || 0;
